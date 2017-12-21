@@ -55,18 +55,28 @@ public class DV implements RoutingAlgorithm {
 
 class DVRoutingTableEntry implements RoutingTableEntry
 {
+	//setting up table variables
+	private int dest; 
+	private int iface;
+	private int metric;
+	private int time;
     
     public DVRoutingTableEntry(int d, int i, int m, int t)
 	{
+    	//initializing table values
+    	this.setDestination(d);
+    	this.setInterface(i);
+    	this.setMetric(m);
+    	this.setTime(t);
 	}
-    public int getDestination() { return 0; } 
-    public void setDestination(int d) { }
-    public int getInterface() { return 0; }
-    public void setInterface(int i) { }
-    public int getMetric() { return 0;}
-    public void setMetric(int m) { } 
-    public int getTime() {return 0;}
-    public void setTime(int t) { }
+    public int getDestination() { return dest; } 
+    public void setDestination(int d) { this.dest = d;}
+    public int getInterface() { return iface; }
+    public void setInterface(int i) { this.iface = i;}
+    public int getMetric() { return metric;}
+    public void setMetric(int m) { this.metric = m;} 
+    public int getTime() {return time;}
+    public void setTime(int t) { this.time = t;}
     
     public String toString() 
 	{
