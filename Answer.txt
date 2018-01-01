@@ -1,0 +1,26 @@
+Question 1:
+
+When we don't use SH/PR, test3.cfg and test4.cfg we can observe a bouncing effect in both tet3 and test 4. - That is, both test consist of several network pathologies during link failures.
+
+In test3.cfg:
+	At time t=12, a packet with src=0 and dst=4 is sent while the link (R0:3 I0:1 W0:1)<-->(R1:4 I1:0 W1:1) is down. 
+	This packet is going back and forth between router 1 and router 2 until it is finally re-routed to router 5 from router 2 (At t=24). 
+
+	At t=50. the same thing happens as a packet with src=0 and dst=5 is doing exactlt the same, going repeatedly from/to routers 1 and 2.
+
+In test4.cfg:
+
+	We see the exact same behvior. For instance, at time=40 a packet with src=7 and dst=2 is sent.
+	This packet is also bouncing back and forth between routers 5 and 6 without stopping.
+
+
+Question 2:
+
+When we enable SH/PR, the aforementioned pathology from question 1 is fixed. Thus,
+
+In test3.cfg: 
+	Router 0's routing table for destination 4 is set to INFINITY for the same packet sent at t=12,
+	causing the packet to be dropped, and thus, preventing the infinity counting between routers 1 and 2. This happens as well for the packet sent at t=50. Now this packet is being dropped at t=51 since the metrics of router 1's routing table for destination 5 is set to be INFINITE.
+
+In test4.cfg:
+	At t=40, the packet with src=7 and dst=2 is being routed to routers 6 and 4 twice, and then, it is dropped at t=47 after the second time. We can infer from that, that when SH/PR is enabled, a packet is prevented from being delievered thru the same link more than once.
